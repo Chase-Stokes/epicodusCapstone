@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import MainLayout from './layouts/MainLayout';
+import HomeLayout from './layouts/HomeLayout';
 
 import Homepage from './pages/Homepage';
 import Registration from './pages/Registration';
@@ -11,24 +12,18 @@ import './default.scss';
 function App() {
   return (
     <div className='App'>
-      <MainLayout>
         <Routes>
-            <Route exact path="/" element={(<Homepage />)} />
-            <Route path="/registration" element={(<Registration />)}/>  
-          {/* <Route exact path="/" render={() => (
-            <MainLayout>
-            <Homepage />
-            </MainLayout>
-            )} />
-            
-            <Route path="/registration" render={() => (
+            <Route exact path="/" element={(
+              <HomeLayout>
+                <Homepage />
+              </HomeLayout>
+              )} />
+            <Route exact path="/registration" element={(
               <MainLayout>
-              <Registration />
+                <Registration />
               </MainLayout>
-            )} />   */}
-
+              )} />
         </Routes>
-      </MainLayout>
     </div>
   );
 }
