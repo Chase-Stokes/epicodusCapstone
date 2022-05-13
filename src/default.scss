@@ -4,10 +4,17 @@ html {
 
 html,
 body {
-    height: 100%;
     padding: 0;
     margin: 0;
 }
+
+html,
+body,
+#root,
+.App {
+    height: 100%;
+}
+
 
 * , ::before, ::after {
     -webkit-box-sizing: border-box;;
@@ -31,4 +38,12 @@ a, a:hover {
     -moz-transition: all .4s ease-in-out;
     transition: all .4s ease-in-out;
     
+}
+
+.main {
+    width: 100%;
+    height: calc(100% - 10rem);
+    max-width: 1450px;
+    padding: 0 10px;
+    margin: 0 auto;
 }
