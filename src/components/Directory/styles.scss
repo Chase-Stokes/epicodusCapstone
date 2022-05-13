@@ -25,5 +25,20 @@
             height: 100%;
             z-index: 1;
         }
+
+        a {
+            position: absolute;
+            top: 50%; left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            font-size: 2rem;
+            line-height: 1;
+            font-weight: 400;
+            text-transform: uppercase;
+            background: white;
+            padding: 8px 10px;
+            border: 1px solid black;
+        }
     }
 }
