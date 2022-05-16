@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { auth } from './firebase/utility';
+import { auth, handleUserProfile } from './firebase/utility';
 
 import MainLayout from './layouts/MainLayout';
 import HomeLayout from './layouts/HomeLayout';
@@ -25,18 +25,26 @@ class App extends Component {
 
     authListener = null;
     componentDidMount() {
-      this.authListener = auth.onAuthStateChanged(userAuth => {
-        if (!userAuth)
-            this.setState({...initialState});
-
+      this.authListener = auth.onAuthStateChanged(async userAuth => {
+        if (userAuth) {
+          const userRef = await handleUserProfile(userAuth);
+          userRef.onSnapshot(snap => {
+            this.setState({
+              currentUser : {
+                id : snap.id,
+                ...snap.data()
+              }
+            })
+          })
+        }
         this.setState({
-          currentUser: userAuth
-        });
+          ...initialState
+        })
       }); 
     }
 
     componentWillUnmount() {
-
+      this.authListener();
     }
 
   render() {
