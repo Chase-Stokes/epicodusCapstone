@@ -19,5 +19,3 @@ export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider);
 //     const user = result.user
 // });
 
-
-//41:44 timestamp

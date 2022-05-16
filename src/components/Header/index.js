@@ -1,10 +1,12 @@
 import React from "react";
 import './styles.scss';
 import { Link } from 'react-router-dom';
+import { auth } from './../../firebase/utility'
 
 import Logo from './../../assets/logo.jpg';
 
 const Header = props => {
+    const { currentUser } = props;
     return (
         <header className="header">
             <div className="wrap">
@@ -15,22 +17,34 @@ const Header = props => {
                 </div>
 
                 <div className='actionsCall'>
-                    <ul>
-                        <li>
-                            <Link to="/registration">
-                                Register
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/login">
-                                Log In
-                            </Link>
-                        </li>
-                    </ul>
+                    {currentUser && (
+                        <ul>
+                            <li>
+                                <span onClick={() => auth.signOut()}>Log Out</span>
+                            </li>
+                        </ul>
+                    )}
+                    {!currentUser && (
+                        <ul>
+                            <li>
+                                <Link to="/registration">
+                                    Register
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/login">
+                                    Log In
+                                </Link>
+                            </li>
+                        </ul>
+                    )}
                 </div>
             </div>
         </header>
     );
 };
 
+Header.defaultProps = {
+    currentUser: null
+}
 export default Header;
