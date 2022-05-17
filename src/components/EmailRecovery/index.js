@@ -47,7 +47,7 @@ class EmailRecovery extends Component {
         event.preventDefault();
         try {
             const { email } = this.state;
-            const config = {
+            const config = { // this is where the recovery email sends you after they reset their password
                 url: 'http://localhost:3000/login'
             }
             await auth.sendPasswordResetEmail(email, config)
