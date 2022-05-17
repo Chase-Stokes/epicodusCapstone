@@ -40,6 +40,11 @@ class SignUp extends Component {
                 error: error
             });
             return;
+        } else if (password.length < 6) {
+            const error = ['Password Must Be At Least 6 Characters'];
+            this.setState({
+                error: error
+            });
         }
         try {
             const { user } = await auth.createUserWithEmailAndPassword(email, password)
