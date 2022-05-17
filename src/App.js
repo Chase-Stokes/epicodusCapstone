@@ -58,7 +58,7 @@ class App extends Component {
                   <Homepage />
                 </HomeLayout>
                 )} />
-              <Route exact path="/registration" element={(
+              <Route exact path="/registration" element={currentUser ? <Navigate to="/" /> : (
                 <MainLayout currentUser={currentUser}>
                   <Registration />
                 </MainLayout>

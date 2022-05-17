@@ -33,25 +33,34 @@ class SignUp extends Component {
 
     handleFormSubmit = async event => {
         event.preventDefault();
-        const {displayName, email, password, confirmPassword, error} = this.state;
-        if(password != confirmPassword) {
+        const {displayName, email, password, confirmPassword} = this.state;
+        if(password !== confirmPassword) {
             const error = ['Passwords Dont Match'];
             this.setState({
-                errors: error
+                error: error
             });
             return;
         }
+        try {
+            const { user } = await auth.createUserWithEmailAndPassword(email, password)
+            await handleUserProfile(user, { displayName });
+            this.setState({
+                ...initialState
+            });
+        } catch(err) {
+            console.log(err);
+        }
     }
     render() {
-        const {displayName, email, password, confirmPassword, errors} = this.state;
+        const {displayName, email, password, confirmPassword, error} = this.state;
 
         return (
             <div className='signup'>
                 <div className='wrap'>
                     <h2>Sign Up</h2>
-                    {errors.length > 0 && (
+                    {error.length > 0 && (
                         <ul>
-                            {errors.map((err, index) => {
+                            {error.map((err, index) => {
                                 return (
                                     <li key={index}>{err}</li>
                                 )
