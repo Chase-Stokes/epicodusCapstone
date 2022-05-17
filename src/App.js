@@ -8,6 +8,7 @@ import HomeLayout from './layouts/HomeLayout';
 import Homepage from './pages/Homepage';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
+import PasswordRecovery from './pages/RecoverPassword';
 
 import './default.scss';
 
@@ -57,18 +58,25 @@ class App extends Component {
                 <HomeLayout currentUser={currentUser}>
                   <Homepage />
                 </HomeLayout>
-                )} />
-              <Route exact path="/registration" element={currentUser ? <Navigate to="/" /> : (
+              )} />
+              <Route exact path="/registration"
+                element={currentUser ? <Navigate to="/" /> : (
                 <MainLayout currentUser={currentUser}>
                   <Registration />
                 </MainLayout>
-                )} />
+              )} />
               <Route exact path="/login" 
                 element={currentUser ? <Navigate to="/" /> : (
                   <MainLayout currentUser={currentUser}>
                     <Login />
                   </MainLayout>
-                )} />
+              )} />    
+              <Route exact path="/recovery" 
+                element={(
+                  <MainLayout currentUser={currentUser}>
+                    <PasswordRecovery />
+                  </MainLayout>
+              )} />
           </Routes>
       </div>
     );

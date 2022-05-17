@@ -1,7 +1,9 @@
 .header {
-    width: 1450px;
+    width: 1525px;
     height: 10rem;
     box-shadow: 0 2px 0 rgba(0,0,0,.1);
+    //test scheme
+    background-color: #2d4154;
 
     .wrap {
         position: relative;
@@ -49,7 +51,9 @@
                 a {
                     font-size: 1.8rem;
                     line-height: 1;
-                    color: black;
+                    //test scheme
+                    color: #f7dba7;
+                    // color: black;
                     text-decoration: none;
                     text-transform: uppercase;
                 }
