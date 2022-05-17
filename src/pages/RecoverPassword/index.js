@@ -1,10 +1,9 @@
 import React from "react";
+import EmailRecovery from "../../components/EmailRecovery";
 
 const passwordRecovery = props => {
     return (
-        <div>
-            <h1>Recover Password</h1>
-        </div>
+        <EmailRecovery />
     );
 }
 

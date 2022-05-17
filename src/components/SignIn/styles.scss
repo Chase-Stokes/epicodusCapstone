@@ -1,30 +1,25 @@
-.signin {
+.googleSignIn {
+    margin: .5rem auto .5rem;
+}
+
+.link {
     display: block;
     width: 100%;
-    max-width: 40.0rem;
-    margin: 4rem auto 6rem;
-    border: 1px solid #56638A;
-    padding: 10px;
-    background: #2d4154;
-    color: #f7dba7;
-
-    .wrap {
-        padding: 10px;
-
-        h2 {
-            font-size: 2.2rem;
-            line-height: 1;
-            font-weight: 400;
-            text-transform: uppercase;
-            text-align: center;
-            display: block;
-            width: 100%;
-            padding: 0;
-            margin: 0 auto 3rem;
-        }
-        
-        .googleSignIn {
-            margin: .5rem auto .5rem;
-        }
+    background: #56638A;
+    
+    padding: 1rem 0;
+    margin: 0 auto;
+    font-size: 1.8rem;
+    line-height: 1;
+    
+    text-transform: uppercase;
+    text-align: center;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    
+    a {
+        color: #f7dba7;
+        font-weight: 400;
     }
 }
