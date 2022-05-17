@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './styles.scss';
 
 import {auth, handleUserProfile} from './../../firebase/utility';
@@ -7,39 +7,26 @@ import Input from './../Forms/Input';
 import Button from './../Forms/Button';
 import FormWrapper from './../FormWrapper/index';
 
-const initialState = {
-    displayName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    error: []
-};
+const SignUp = props => {
+    const [displayName, setDisplayName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState([]);
 
-class SignUp extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            ...initialState
-        };
-
-        this.handleChange = this.handleChange.bind(this);
+    const resetState = () => {
+        setDisplayName('');
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+        setError([]);
     }
 
-    handleChange(event) {
-        const { name, value } = event.target;
-        this.setState({
-            [name]: value
-        })
-    }
-
-    handleFormSubmit = async event => {
+    const handleFormSubmit = async event => {
         event.preventDefault();
-        const {displayName, email, password, confirmPassword} = this.state;
         if(password !== confirmPassword) {
             const error = ['Passwords Dont Match'];
-            this.setState({
-                error: error
-            });
+            setError(error)
             return;
         } else if (password.length < 6) {
             const error = ['Password Must Be At Least 6 Characters'];
@@ -50,43 +37,40 @@ class SignUp extends Component {
         try {
             const { user } = await auth.createUserWithEmailAndPassword(email, password)
             await handleUserProfile(user, { displayName });
-            this.setState({
-                ...initialState
-            });
+            resetState();
         } catch(err) {
             console.log(err);
         }
     }
-    render() {
-        const {displayName, email, password, confirmPassword, error} = this.state;
-        const configureFormWrap = {
-            head: 'Register'
-        };
-        return (
-            <FormWrapper {...configureFormWrap}>
-                <div className='formWrap'>
-                    <form onSubmit={this.handleFormSubmit}>
-                        {error.length > 0 && (
-                            <ul>
-                                {error.map((err, index) => {
-                                    return (
-                                        <li key={index}>{err}</li>
-                                    )
-                                })}
-                            </ul>
-                        )}
-                        <Input type='text' name='displayName' value={displayName} placeholder='Name'  onChange={this.handleChange} />
-                        <Input type='email' name='email' value={email} placeholder='Email'  onChange={this.handleChange} />
-                        <Input type='password' name='password' value={password} placeholder='Password'  onChange={this.handleChange} />
-                        <Input type='password' name='confirmPassword' value={confirmPassword} placeholder='Confirm Password'  onChange={this.handleChange} />
-                        <Button type='submit' >
-                            Register
-                        </Button>
-                    </form>
-                </div>
-            </FormWrapper>
-        )
-    }
+
+    const configureFormWrap = {
+        head: 'Register'
+    };
+
+    return (
+        <FormWrapper {...configureFormWrap}>
+            <div className='formWrap'>
+                <form onSubmit={handleFormSubmit}>
+                    {error.length > 0 && (
+                        <ul>
+                            {error.map((err, index) => {
+                                return (
+                                    <li key={index}>{err}</li>
+                                )
+                            })}
+                        </ul>
+                    )}
+                    <Input type='text' name='displayName' value={displayName} placeholder='Name'  handleChange={event => setDisplayName(event.target.value)} />
+                    <Input type='email' name='email' value={email} placeholder='Email'  handleChange={event => setEmail(event.target.value)} />
+                    <Input type='password' name='password' value={password} placeholder='Password'  handleChange={event => setPassword(event.target.value)} />
+                    <Input type='password' name='confirmPassword' value={confirmPassword} placeholder='Confirm Password'  handleChange={event => setConfirmPassword(event.target.value)} />
+                    <Button type='submit' >
+                        Register
+                    </Button>
+                </form>
+            </div>
+        </FormWrapper>
+    )
 }
 
 export default SignUp;
