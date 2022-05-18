@@ -7,10 +7,20 @@
         height: 100%;
     }
 
+    .call {
+
+
+        h1 {
+            color: #f7dba7;
+            font-size: 10rem;
+            font-weight: 400;
+            text-align: center;
+        }
+    }
     .item {
         position: relative;
         width: 50%;
-        height: 100%;
+        height: 75%;
         float: left;
         background-position: center;
         background-repeat: no-repeat;

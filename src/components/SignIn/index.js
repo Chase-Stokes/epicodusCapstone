@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInUser } from './../../redux/User/user.actions';
+import { signInUser, signInWithGoogle, resetAllAuth } from './../../redux/User/user.actions';
 import './styles.scss';
 import Input from './../Forms/Input';
 import Buttons from './../Forms/Button';
 import FormWrapper from './../FormWrapper/index';
-import { signInWithGoogle } from './../../firebase/utility';
+// import { signInWithGoogle } from './../../firebase/utility';
 import { withRouter } from "../../hooks";
 
 const mapState = ({ user }) => ({
     signInSuccess: user.signInSuccess
 });
+
+
 
 const SignIn = props => {
     const [email, setEmail] = useState('');
@@ -23,6 +25,7 @@ const SignIn = props => {
     useEffect(() => {
         if (signInSuccess) {
             resetFields();
+            dispatch(resetAllAuth());
             navigate('/');
         }
     }, [signInSuccess])
@@ -32,6 +35,10 @@ const SignIn = props => {
         setPassword('');
     }
     
+    const handleGoogle = () => {
+        dispatch(signInWithGoogle());
+    }
+
     const handleSubmission = event => {
         event.preventDefault();
         dispatch(signInUser({email, password}));
@@ -51,7 +58,7 @@ const SignIn = props => {
                     <Buttons type="submit">Log In</Buttons>
                     <div className="googleSignIn">
                         <div className="row">
-                            <Buttons onClick={signInWithGoogle} >
+                            <Buttons onClick={handleGoogle} >
                                 Google Sign In
                             </Buttons>
                         </div>

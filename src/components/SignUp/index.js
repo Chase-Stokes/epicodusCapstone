@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { signUpUser } from '../../redux/User/user.actions';
+import { signUpUser, resetAllAuth } from '../../redux/User/user.actions';
 import { withRouter } from "../../hooks";
 import './styles.scss';
 
@@ -29,6 +29,7 @@ const SignUp = props => {
     useEffect(() => {
         if(signUpSuccess) {
             resetState();
+            dispatch(resetAllAuth());
             navigate('/')
         }
     }, [signUpSuccess]);

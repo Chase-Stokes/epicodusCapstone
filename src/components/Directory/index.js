@@ -8,6 +8,9 @@ const Directory = props => {
     return (
         <div className="directory">
             <div className="wrap">
+                <div className="call">
+                    <h1>EAT? HUNGRY. FOOD!</h1>
+                </div>
                 <div 
                 className="item"
                 style={{

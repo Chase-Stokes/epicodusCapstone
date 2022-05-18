@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from "../../hooks";
-import { recoverPassword } from './../../redux/User/user.actions'
+import { recoverPassword, resetAllAuth } from './../../redux/User/user.actions'
 import './styles.scss';
 
 import FormWrapper from './../FormWrapper/index';
@@ -24,6 +24,7 @@ const EmailRecovery = props => {
 
     useEffect(() => {
         if(resetPassword){
+            dispatch(resetAllAuth());
             navigate('/login')
         }
     }, [resetPassword]);
