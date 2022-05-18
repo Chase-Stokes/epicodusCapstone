@@ -23,6 +23,11 @@ const Header = props => {
                             <li>
                                 <span onClick={() => auth.signOut()}>Log Out</span>
                             </li>
+                            <li>
+                                <Link to="/dashboard">
+                                    Dashboard
+                                </Link>
+                            </li>
                         </ul>
                     )}
                     {!currentUser && (
@@ -39,6 +44,7 @@ const Header = props => {
                             </li>
                         </ul>
                     )}
+                    
                 </div>
             </div>
         </header>

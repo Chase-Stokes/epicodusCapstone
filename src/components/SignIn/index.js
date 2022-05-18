@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './styles.scss';
 import Input from './../Forms/Input';
 import Buttons from './../Forms/Button';
 import FormWrapper from './../FormWrapper/index';
 import { signInWithGoogle, auth } from './../../firebase/utility';
+import { withRouter } from "../../hooks";
 
 const SignIn = props => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const resetFields = () => {
         setEmail('');
@@ -20,6 +22,7 @@ const SignIn = props => {
         try {
             await auth.signInWithEmailAndPassword(email, password);
             resetFields();
+            navigate('/');
         } catch(error) {
             console.log(error)
         }
@@ -52,4 +55,4 @@ const SignIn = props => {
     );
 };
 
-export default SignIn;
+export default withRouter(SignIn);

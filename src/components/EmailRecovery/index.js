@@ -1,5 +1,6 @@
 import React, { useState } from "react"; 
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { withRouter } from "../../hooks";
 import './styles.scss';
 
 import FormWrapper from './../FormWrapper/index';
@@ -8,25 +9,26 @@ import Button from './../Forms/Button';
 import { auth } from './../../firebase/utility';
 
 
-function withRouter(Component) {
-    function ComponentWithRouterProp(props) {
-        let location = useLocation();
-        let navigate = useNavigate();
-        let params = useParams();
-        return (
-            <Component
-            {...props}
-            router={{ location, navigate, params }}
-            />
-        );
-    } 
-    return ComponentWithRouterProp;   
-}
+// function withRouter(Component) {
+//     function ComponentWithRouterProp(props) {
+//         let location = useLocation();
+//         let navigate = useNavigate();
+//         let params = useParams();
+//         return (
+//             <Component
+//             {...props}
+//             router={{ location, navigate, params }}
+//             />
+//         );
+//     } 
+//     return ComponentWithRouterProp;   
+// }
 
 const EmailRecovery = props => {
 
     const [email, setEmail] = useState('');
     const [errors, setErrors] = useState([]);
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -36,7 +38,7 @@ const EmailRecovery = props => {
             }
             await auth.sendPasswordResetEmail(email, config)
             .then(() => {
-                props.history.push('/login');
+                navigate('/login');
             }).catch(() => {
                 const error = ['Email not found.']
                 setErrors(error)

@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { auth, handleUserProfile } from './firebase/utility';
 import { setCurrentUser } from './redux/User/user.actions';
+import IsAuthorized from './higherOrderComponent/IsAuthorized';
 
 import MainLayout from './layouts/MainLayout';
 import HomeLayout from './layouts/HomeLayout';
@@ -11,16 +12,17 @@ import Homepage from './pages/Homepage';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
 import PasswordRecovery from './pages/RecoverPassword';
+import Dashboard from './pages/Dashboard';
 
 import './default.scss';
 
 
-class App extends Component {
+const App = props => {
 
-    authListener = null;
-    componentDidMount() {
-      const { setCurrentUser } = this.props;
-      this.authListener = auth.onAuthStateChanged(async userAuth => {
+    const { setCurrentUser, currentUser } = props;
+
+    useEffect(() => {
+      const authListener = auth.onAuthStateChanged(async userAuth => {
         if (userAuth) {
           const userRef = await handleUserProfile(userAuth);
           userRef.onSnapshot(snap => {
@@ -32,14 +34,11 @@ class App extends Component {
         }
         setCurrentUser(userAuth);
       }); 
-    }
+      return () => {
+        authListener(); //unsub to prevent memory leaks
+      }
+    }, [])
 
-    componentWillUnmount() {
-      this.authListener();
-    }
-
-  render() {
-      const { currentUser } = this.props; 
 
     return (
       <div className='App'>
@@ -56,7 +55,7 @@ class App extends Component {
                 </MainLayout>
               )} />
               <Route exact path="/login" 
-                element={currentUser ? <Navigate to="/" /> : (
+                element={(
                   <MainLayout>
                     <Login />
                   </MainLayout>
@@ -67,10 +66,18 @@ class App extends Component {
                     <PasswordRecovery />
                   </MainLayout>
               )} />
+              <Route exact path="/dashboard" 
+                element={(
+                  <IsAuthorized>
+                    <MainLayout>
+                      <Dashboard />
+                    </MainLayout>
+                  </IsAuthorized>
+              )} />
           </Routes>
       </div>
     );
-  }
+
 }
 
 const mapStateToProps = ({ user }) => ({
