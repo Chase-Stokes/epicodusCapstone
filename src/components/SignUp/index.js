@@ -1,18 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { signUpUser } from '../../redux/User/user.actions';
+import { withRouter } from "../../hooks";
 import './styles.scss';
 
-import {auth, handleUserProfile} from './../../firebase/utility';
+// import {auth, handleUserProfile} from './../../firebase/utility';
 
 import Input from './../Forms/Input';
 import Button from './../Forms/Button';
 import FormWrapper from './../FormWrapper/index';
 
+const mapState = ({ user }) => ({
+    signUpSuccess: user.signUpSuccess,
+    signUpError: user.signUpError
+})
+
 const SignUp = props => {
+    const { signUpSuccess, signUpError} = useSelector(mapState)
     const [displayName, setDisplayName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState([]);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if(signUpSuccess) {
+            resetState();
+            navigate('/')
+        }
+    }, [signUpSuccess]);
+
+    useEffect(() => {
+        if(Array.isArray(signUpError) && signUpError.length > 0){
+            setError(signUpError)
+        }
+    }, [signUpError]);
 
     const resetState = () => {
         setDisplayName('');
@@ -22,25 +47,9 @@ const SignUp = props => {
         setError([]);
     }
 
-    const handleFormSubmit = async event => {
+    const handleFormSubmit = event => {
         event.preventDefault();
-        if(password !== confirmPassword) {
-            const error = ['Passwords Dont Match'];
-            setError(error)
-            return;
-        } else if (password.length < 6) {
-            const error = ['Password Must Be At Least 6 Characters'];
-            this.setState({
-                error: error
-            });
-        }
-        try {
-            const { user } = await auth.createUserWithEmailAndPassword(email, password)
-            await handleUserProfile(user, { displayName });
-            resetState();
-        } catch(err) {
-            console.log(err);
-        }
+        dispatch(signUpUser({displayName, email, password, confirmPassword}))
     }
 
     const configureFormWrap = {
@@ -73,4 +82,4 @@ const SignUp = props => {
     )
 }
 
-export default SignUp;
+export default withRouter(SignUp);

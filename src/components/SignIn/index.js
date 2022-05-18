@@ -51,7 +51,7 @@ const SignIn = props => {
                     <Buttons type="submit">Log In</Buttons>
                     <div className="googleSignIn">
                         <div className="row">
-                            <Buttons onClick={signInWithGoogle} onSubmit={navigate('/')}>
+                            <Buttons onClick={signInWithGoogle} >
                                 Google Sign In
                             </Buttons>
                         </div>
