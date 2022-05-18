@@ -1,52 +1,43 @@
-import React, { useState } from "react"; 
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react"; 
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from "../../hooks";
+import { recoverPassword } from './../../redux/User/user.actions'
 import './styles.scss';
 
 import FormWrapper from './../FormWrapper/index';
 import Input from './../Forms/Input';
 import Button from './../Forms/Button';
-import { auth } from './../../firebase/utility';
 
-
-// function withRouter(Component) {
-//     function ComponentWithRouterProp(props) {
-//         let location = useLocation();
-//         let navigate = useNavigate();
-//         let params = useParams();
-//         return (
-//             <Component
-//             {...props}
-//             router={{ location, navigate, params }}
-//             />
-//         );
-//     } 
-//     return ComponentWithRouterProp;   
-// }
+const mapState = ({ user }) => ({
+    resetPassword: user.resetPassword,
+    resetPasswordError: user.resetPasswordError
+})
 
 const EmailRecovery = props => {
 
+    const {resetPassword, resetPasswordError} = useSelector(mapState)
     const [email, setEmail] = useState('');
     const [errors, setErrors] = useState([]);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const config = { // this is where the recovery email sends you after they reset their password
-                url: 'http://localhost:3000/login'
-            }
-            await auth.sendPasswordResetEmail(email, config)
-            .then(() => {
-                navigate('/login');
-            }).catch(() => {
-                const error = ['Email not found.']
-                setErrors(error)
-            })
-        } catch(error){
-            // console.log(error);
+    useEffect(() => {
+        if(resetPassword){
+            navigate('/login')
         }
-        setErrors([]);
+    }, [resetPassword]);
+
+    useEffect(() => {
+        if(Array.isArray(resetPasswordError) && resetPasswordError.length > 0) {
+            setErrors(resetPasswordError)
+        }
+    }, [resetPasswordError])
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        dispatch(recoverPassword({ email }));
+        // setErrors([]);
     }
 
     const configFormWrapper = {
