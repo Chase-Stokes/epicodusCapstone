@@ -1,3 +1,62 @@
+# Proposal
+```
+Project Name: 
+  Restaurant Website
+
+Description: 
+  Website for a business owner to have CRUD functionality for their products. As an admin you should have a dashboard to update the site. As a user you should be able to view the listed items and add them to a cart.
+
+MVP:
+  -Admin Role
+  -User Role
+  -Authorization via Firebase
+  -CRUD
+  
+Stretch Goals:
+  -Google Sign In
+  -Password Recovery
+  -Views/Ability For Users To Add Item Objects To Cart
+  -Payment Auth
+
+Tech Used:
+  -JS
+  -React / React-Router-Dom / React-Redux
+  -Redux / Redux Middleware (Logger/Thunk/Saga)
+  -Node
+  -SCSS
+  -Firebase
+
+Decisions Made:
+  -At the start I was planning on making a pokemon fansite including a pokedex/battle sim, but with many complications integrating canvas with REACT I decided to switch gears. I decided to switch to something I could continue to build upon after the capstone week, something I could use as a headliner for my current portfolio. After spending 12hrs+ researching an idea I had scrapped, I got to researching what this website would need and immediately jumped into studying redux. By the time I felt I had a grasp on it it was crunch time, and had to rush it a little.
+
+Lessons Learned:
+  -Prepare/Plan more
+  -Be more prepared for roadblocks/bugs
+  -Focus more on the frameworks/library documentation rather than just googling it
+
+Link to Repo:
+  -TBA
+```
+
+## Setup
+
+* in your terminal navigate to where you want to store the repo and clone it from -insert-repo-here-
+* inside of the cloned repo, create a file called config.js inside of the firebase folder
+* setup a firebase account
+    -start a project on firebase
+    -navigate to the project settings on the firebase website, and in the previously created config.js fill it with the firebaseConfig you will find on the website. It should look something like
+    ```
+    const firebaseConfig = {
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: ""
+    };
+    ```
+    -in the root directory of the project run -npm start-
+    -enjoy
 
 # Getting Started with Create React App
 
