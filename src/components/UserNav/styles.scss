@@ -1,7 +1,8 @@
 .userNav {
-    width: 15%;
     height: 100vh;
-    float: right;
+    text-align: center;
+    padding: 3rem;
+    background-color: #2d4154;
 
     .menu {
         margin: 3rem auto 0;
@@ -13,7 +14,6 @@
         }
     
         ul {
-    
             li {
             border-bottom: 1px solid #d3d3d3;
     

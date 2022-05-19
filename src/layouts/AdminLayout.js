@@ -14,31 +14,33 @@ const AdminLayout = props => {
     };
 
     return (
-        <div className="adminLayout">
-            <Header {...props} />
-                <div className="controlPanel">
-                    <div className="sidebar">
-                        <UserNav>
-                            <ul>
-                                <li>
-                                    <Link to="/admin">
-                                    Home
-                                    </Link>
-                                </li>
-                                <li>
-                                    <span className="signOut" onClick={() => signOut()}>
-                                    Sign Out
-                                    </span>
-                                </li>
-                            </ul>
-                        </UserNav>
+        <>
+            <div className="adminLayout">
+                <Header {...props} />
+                    <div className="controlPanel">
+                        <div className="sidebar">
+                            <UserNav>
+                                <ul>
+                                    <li>
+                                        <Link to="/admin">
+                                        Home
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <span className="signOut" onClick={() => signOut()}>
+                                        Sign Out
+                                        </span>
+                                    </li>
+                                </ul>
+                            </UserNav>
+                        </div>
+                        <div className="content">
+                        {props.children}
+                        </div>
                     </div>
-                    <div className="content">
-                    {props.children}
-                    </div>
-                </div>
+            </div>
             <Footer />
-        </div>
+        </>
     );
 };
 

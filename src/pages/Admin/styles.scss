@@ -1,6 +1,6 @@
 .admin {
     padding: 0 10px;
-    
+    display: inline-block;
 
 
     .callToActions {
@@ -26,6 +26,8 @@
 }
 
 .manageProducts {
+    display: inline-block;
+
     h1 {
         margin-top: 2rem;
     };

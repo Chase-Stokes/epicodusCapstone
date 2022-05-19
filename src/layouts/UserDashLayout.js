@@ -15,31 +15,33 @@ const UserDashLayout = props => {
     };
 
     return (
-        <div className="dashboardLayout">
-            <Header {...props} />
-                <div className="controlPanel">
-                    <div className="sidebar">
-                        <UserNav>
-                            <ul>
-                            <li>
-                                <Link to="/dashboard">
-                                Home
-                                </Link>
-                            </li>
-                            <li>
-                                <span className="signOut" onClick={() => signOut()}>
-                                Sign Out
-                                </span>
-                            </li>
-                            </ul>
-                        </UserNav>
+        <>
+            <div className="dashboardLayout">
+                <Header {...props} />
+                    <div className="controlPanel">
+                        <div className="sidebar">
+                            <UserNav>
+                                <ul>
+                                <li>
+                                    <Link to="/dashboard">
+                                    Home
+                                    </Link>
+                                </li>
+                                <li>
+                                    <span className="signOut" onClick={() => signOut()}>
+                                    Sign Out
+                                    </span>
+                                </li>
+                                </ul>
+                            </UserNav>
+                        </div>
+                        <div className="content">
+                            {props.children}
+                        </div>
                     </div>
-                    <div className="content">
-                        {props.children}
-                    </div>
-                </div>
+            </div>
             <Footer />
-        </div>
+        </>
     );
 };
 

@@ -17,11 +17,11 @@ const UserNav = ({ children }) => {
     return (
         <div className="userNav">
 
-        <UserProfile {...configUserProfile} />
+            <UserProfile {...configUserProfile} />
 
-        <div className="menu">
-            {children}
-        </div>
+            <div className="menu">
+                {children}
+            </div>
         </div>
     );
 }
