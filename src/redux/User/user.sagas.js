@@ -1,7 +1,12 @@
 import { takeLatest, call, all, put } from 'redux-saga/effects';
 import userTypes from "./user.types";
-import { signInSuccess, signOutUserSuccess, userError } from './user.actions';
+import { 
+    signInSuccess, 
+    signOutUserSuccess, 
+    userError,
+    resetPasswordSuccess } from './user.actions';
 import { auth, handleUserProfile, getCurrentUser, GoogleProvider } from "../../firebase/utility";
+import { handleResetPassword } from './user.helpers';
 
 
 export function* getUserAuthSnap(user, data={}) {
@@ -21,8 +26,6 @@ export function* emailSignIn({ payload: {email, password} }) {
     try {
         const {user} = yield auth.signInWithEmailAndPassword(email, password);
         yield getUserAuthSnap(user)
-        // 
-        // dispatch({ type: userTypes.SIGN_IN_SUCCESS, payload: true })
     } catch(error) {
         console.log(error)
     }
@@ -86,11 +89,38 @@ export function* onSignUpUserStart() {
     yield takeLatest(userTypes.SIGN_UP_USER_START, signUpUser)
 }
 
+export function* resetPassword({ payload: {email} }){
+    
+    try {
+        yield call(handleResetPassword, email)
+        yield put(resetPasswordSuccess());
+        } catch(error){
+            yield put(userError(error))
+    }
+}
+export function* onResetPasswordStart() {
+    yield takeLatest(userTypes.RESET_PASSWORD_START, resetPassword)
+}
+
+export function* googleSignIn() {
+    try {
+        const {user} = yield auth.signInWithPopup(GoogleProvider)
+        yield getUserAuthSnap(user);
+    } catch (error) {
+        console.log(error)
+    }
+}
+export function* onGoogleSignInStart() {
+    yield takeLatest(userTypes.GOOGLE_SIGN_IN_START, googleSignIn )
+}
+
 export default function* userSagas() {
     yield all([
         call(onEmailSignInStart), 
         call(onCheckUserSignIn), 
         call(onSignOutUserStart),
-        call(onSignUpUserStart)
+        call(onSignUpUserStart),
+        call(onResetPasswordStart),
+        call(onGoogleSignInStart)
     ])
 }

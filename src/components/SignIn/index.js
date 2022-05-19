@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { emailSignInStart, signInWithGoogle, resetAllAuth } from '../../redux/User/user.actions';
+import { emailSignInStart, googleSignInStart, resetUserState } from '../../redux/User/user.actions';
 import './styles.scss';
 import Input from './../Forms/Input';
 import Buttons from './../Forms/Button';
 import FormWrapper from './../FormWrapper/index';
-// import { signInWithGoogle } from './../../firebase/utility';
 import { withRouter } from "../../hooks";
 
 const mapState = ({ user }) => ({
@@ -25,7 +24,6 @@ const SignIn = props => {
     useEffect(() => {
         if (currentUser) {
             resetFields();
-            // dispatch(resetAllAuth());
             navigate('/');
         }
     }, [currentUser])
@@ -36,7 +34,7 @@ const SignIn = props => {
     }
     
     const handleGoogle = () => {
-        dispatch(signInWithGoogle());
+        dispatch(googleSignInStart());
     }
 
     const handleSubmission = event => {
