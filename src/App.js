@@ -8,7 +8,8 @@ import AdminStuff from './components/AdminStuff';
 
 import MainLayout from './layouts/MainLayout';
 import HomeLayout from './layouts/HomeLayout';
-
+import AdminLayout from './layouts/AdminLayout';
+import UserDashLayout from './layouts/UserDashLayout';
 import Homepage from './pages/Homepage';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
@@ -58,17 +59,17 @@ const App = props => {
               <Route exact path="/dashboard" 
                 element={(
                   <IsAuthorized>
-                    <MainLayout>
+                    <UserDashLayout>
                       <Dashboard />
-                    </MainLayout>
+                    </UserDashLayout>
                   </IsAuthorized>
               )} />
               <Route exact path="/admin" 
                 element={(
                   <IsAdmin>
-                    <MainLayout>
+                    <AdminLayout>
                       <Admin />
-                    </MainLayout>
+                    </AdminLayout>
                   </IsAdmin>
                 )} />
           </Routes>

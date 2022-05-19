@@ -1,0 +1,31 @@
+.userNav {
+    width: 15%;
+    height: 100vh;
+    float: right;
+
+    .menu {
+        margin: 3rem auto 0;
+
+        ul, li {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+    
+        ul {
+    
+            li {
+            border-bottom: 1px solid #d3d3d3;
+    
+                a, span {
+                    display: block;
+                    padding: 2rem;
+                    font-size: 1.6rem;
+                    line-height: 1;
+                    color: black;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
