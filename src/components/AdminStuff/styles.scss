@@ -1,0 +1,29 @@
+.adminStuff {
+    display: inline-block;
+    width: 100%;
+    background-color: #56638A;
+    height: auto;
+    margin: 0 auto;
+    padding: 0 10px;
+
+    ul, li {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    ul {
+        float: right;
+
+        li {
+            display: inline-block;
+            font-size: 1rem;
+            line-height: 1;
+            padding: .5rem;
+            
+            a {
+                color: #f7dba7;                
+            }
+        }
+    }
+}

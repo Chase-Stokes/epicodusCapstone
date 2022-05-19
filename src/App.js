@@ -3,6 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { checkUserSignIn } from './redux/User/user.actions';
 import IsAuthorized from './higherOrderComponent/IsAuthorized';
+import IsAdmin from './higherOrderComponent/IsAdmin';
+import AdminStuff from './components/AdminStuff';
 
 import MainLayout from './layouts/MainLayout';
 import HomeLayout from './layouts/HomeLayout';
@@ -12,6 +14,7 @@ import Registration from './pages/Registration';
 import Login from './pages/Login';
 import PasswordRecovery from './pages/RecoverPassword';
 import Dashboard from './pages/Dashboard';
+import Admin from './pages/Admin';
 
 import './default.scss';
 
@@ -19,7 +22,6 @@ import './default.scss';
 const App = props => {
 
     const dispatch = useDispatch();
-    // const { setCurrentUser } = props;
 
     useEffect(() => {
       dispatch(checkUserSignIn());
@@ -28,6 +30,7 @@ const App = props => {
 
     return (
       <div className='App'>
+        <AdminStuff />
           <Routes>
               <Route exact path="/" element={(
                 <HomeLayout>
@@ -60,6 +63,14 @@ const App = props => {
                     </MainLayout>
                   </IsAuthorized>
               )} />
+              <Route exact path="/admin" 
+                element={(
+                  <IsAdmin>
+                    <MainLayout>
+                      <Admin />
+                    </MainLayout>
+                  </IsAdmin>
+                )} />
           </Routes>
       </div>
     );
