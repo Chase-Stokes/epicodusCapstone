@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInUser, signInWithGoogle, resetAllAuth } from './../../redux/User/user.actions';
+import { emailSignInStart, signInWithGoogle, resetAllAuth } from '../../redux/User/user.actions';
 import './styles.scss';
 import Input from './../Forms/Input';
 import Buttons from './../Forms/Button';
@@ -10,7 +10,7 @@ import FormWrapper from './../FormWrapper/index';
 import { withRouter } from "../../hooks";
 
 const mapState = ({ user }) => ({
-    signInSuccess: user.signInSuccess
+    currentUser: user.currentUser
 });
 
 
@@ -20,15 +20,15 @@ const SignIn = props => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { signInSuccess } = useSelector(mapState)
+    const { currentUser } = useSelector(mapState)
 
     useEffect(() => {
-        if (signInSuccess) {
+        if (currentUser) {
             resetFields();
-            dispatch(resetAllAuth());
+            // dispatch(resetAllAuth());
             navigate('/');
         }
-    }, [signInSuccess])
+    }, [currentUser])
     
     const resetFields = () => {
         setEmail('');
@@ -41,7 +41,7 @@ const SignIn = props => {
 
     const handleSubmission = event => {
         event.preventDefault();
-        dispatch(signInUser({email, password}));
+        dispatch(emailSignInStart({email, password}));
     }
     
     

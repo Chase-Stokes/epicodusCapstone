@@ -1,10 +1,10 @@
 import React from "react";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { signOutUserStart } from './../../redux/User/user.actions'
 import './styles.scss';
 import { Link } from 'react-router-dom';
-import { auth } from './../../firebase/utility'
 
-import Logo from './../../assets/logo.jpg';
+import Logo from './../../assets/logo_beige.png';
 
 
 const mapState = ({ user }) => ({
@@ -13,6 +13,10 @@ const mapState = ({ user }) => ({
 
 const Header = props => {
     const { currentUser } = useSelector(mapState);
+    const dispatch = useDispatch();
+    const signOut = () => {
+        dispatch(signOutUserStart())
+    }
     return (
         <header className="header">
             <div className="wrap">
@@ -26,7 +30,7 @@ const Header = props => {
                     {currentUser && (
                         <ul>
                             <li>
-                                <span onClick={() => auth.signOut()}>LOG OUT</span>
+                                <span onClick={() => signOut()}>LOG OUT</span>
                             </li>
                             <li>
                                 <Link to="/dashboard">
