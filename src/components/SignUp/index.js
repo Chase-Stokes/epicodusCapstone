@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { signUpUser, resetAllAuth } from '../../redux/User/user.actions';
+import { signUpUserStart } from './../../redux/User/user.actions';
 import { withRouter } from "../../hooks";
 import './styles.scss';
 
@@ -12,12 +12,12 @@ import Button from './../Forms/Button';
 import FormWrapper from './../FormWrapper/index';
 
 const mapState = ({ user }) => ({
-    signUpSuccess: user.signUpSuccess,
-    signUpError: user.signUpError
+    currentUser: user.currentUser,
+    userError: user.userError
 })
 
 const SignUp = props => {
-    const { signUpSuccess, signUpError} = useSelector(mapState)
+    const { currentUser, userError} = useSelector(mapState)
     const [displayName, setDisplayName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -27,18 +27,17 @@ const SignUp = props => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(signUpSuccess) {
+        if(currentUser) {
             resetState();
-            dispatch(resetAllAuth());
             navigate('/')
         }
-    }, [signUpSuccess]);
+    }, [currentUser]);
 
     useEffect(() => {
-        if(Array.isArray(signUpError) && signUpError.length > 0){
-            setError(signUpError)
+        if(Array.isArray(userError) && userError.length > 0){
+            setError(userError)
         }
-    }, [signUpError]);
+    }, [userError]);
 
     const resetState = () => {
         setDisplayName('');
@@ -50,7 +49,7 @@ const SignUp = props => {
 
     const handleFormSubmit = event => {
         event.preventDefault();
-        dispatch(signUpUser({displayName, email, password, confirmPassword}))
+        dispatch(signUpUserStart({displayName, email, password, confirmPassword}))
     }
 
     const configureFormWrap = {
@@ -63,9 +62,9 @@ const SignUp = props => {
                 <form onSubmit={handleFormSubmit}>
                     {error.length > 0 && (
                         <ul>
-                            {error.map((err, index) => {
+                            {error.map((error, index) => {
                                 return (
-                                    <li key={index}>{err}</li>
+                                    <li key={index}>{error}</li>
                                 )
                             })}
                         </ul>

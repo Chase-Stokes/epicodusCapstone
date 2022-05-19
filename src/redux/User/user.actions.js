@@ -11,15 +11,15 @@ export const signInSuccess = user => ({
     payload: user
 });
 
-
-export const setCurrentUser = user => ({
-    type: userTypes.SET_CURRENT_USER,
-    payload: user
-});
-
 export const checkUserSignIn = () => ({
     type: userTypes.CHECK_USER_SIGN_IN
 });
+
+// export const setCurrentUser = user => ({
+//     type: userTypes.SET_CURRENT_USER,
+//     payload: user
+// });
+
 
 export const signOutUserStart = () => ({
     type: userTypes.SIGN_OUT_USER_START
@@ -28,6 +28,13 @@ export const signOutUserStart = () => ({
 export const signOutUserSuccess = () => ({
     type: userTypes.SIGN_OUT_USER_SUCCESS
 });
+
+export const signUpUserStart = userCredentials => ({
+    type: userTypes.SIGN_UP_USER_START,
+    payload: userCredentials
+})
+
+export const userError = error => ({type: userTypes.USER_ERROR, payload: error})
 
 // export const signInUser = ({ email, password }) => async dispatch => {
 //     try {
@@ -39,21 +46,7 @@ export const signOutUserSuccess = () => ({
 // };
 
 export const signUpUser = ({ displayName, email, password, confirmPassword }) => async dispatch => {
-    if(password !== confirmPassword) {
-        const error = ['Passwords Dont Match'];
-        dispatch({type: userTypes.SIGN_UP_ERROR, payload: error});
-        return;
-    } else if (password.length < 6) {
-        const error = ['Password Must Be At Least 6 Characters'];
-        dispatch({type: userTypes.SIGN_UP_ERROR, payload: error});
-    }
-    try {
-        const { user } = await auth.createUserWithEmailAndPassword(email, password)
-        await handleUserProfile(user, { displayName });
-        dispatch({type: userTypes.SIGN_UP_SUCCESS, payload: true})
-    } catch(err) {
-        console.log(err);
-    }
+    
 }
 
 export const recoverPassword = ({ email }) => async dispatch => {
