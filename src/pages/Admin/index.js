@@ -23,7 +23,7 @@ const Admin = props => {
 
     useEffect(() => {
         dispatch(fetchProductsStart());
-    }, []);
+    });
 
     const configModal = {
         hideModal,
