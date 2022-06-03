@@ -25,7 +25,41 @@
                 width: 80%;
                 margin: 0;
             }
+            
         }
+        nav {
+            display: block;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            
+            ul, ul li {
+                padding: 0;
+                margin: 0;
+                height: 100%;
+            }
+    
+            ul {
+                text-align: center;
+                li {
+                    list-style-type: none;
+                    display: inline-block;
+                    margin: 0 1rem;
+                    
+                    a{
+                        font-size: 1.8rem;
+                        line-height: 10rem;
+                        vertical-align: middle;
+                        color: #f7dba7;
+                        text-decoration: none;
+                        text-transform: uppercase;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
         
         .actionsCall {
             position: absolute;
@@ -33,33 +67,36 @@
             -webkit-transform: translateY(-50%);
             -moz-transform: translateY(-50%);
             transform: translateY(-50%);
-
+            
             ul, li {
                 margin: 0;
                 padding: 0;
             }
-
+            
             span {
                 color: #f7dba7;
             }
             
+
             li {
                 list-style-type: none;
                 display: inline-block;
                 margin-right: 1.5rem;
+                line-height: 10rem;
+                
 
                 &:last-child {
                     margin-right: 0;
                 }
-
                 a {
                     font-size: 1.8rem;
-                    line-height: 1;
+                    line-height: 10rem;
                     //test scheme
                     color: #f7dba7;
                     // color: black;
                     text-decoration: none;
                     text-transform: uppercase;
+                    cursor: pointer;
                 }
             }
         }

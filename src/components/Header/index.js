@@ -25,14 +25,19 @@ const Header = props => {
                         <img src={Logo} alt="Example Logo" />
                     </Link>
                 </div>
-
+                <nav>
+                    <ul>
+                        <li><Link to='/'>Home</Link></li>
+                        <li><Link to='/search'>Search</Link></li>
+                    </ul>
+                </nav>
                 <div className='actionsCall'>
                     {currentUser && (
                         <ul>
                             <li>
                                 <span onClick={() => signOut()}>LOG OUT</span>
                             </li>
-                            <li>
+                            <li className="dash">
                                 <Link to="/dashboard">
                                     Dashboard
                                 </Link>

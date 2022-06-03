@@ -16,6 +16,7 @@ import Login from './pages/Login';
 import PasswordRecovery from './pages/RecoverPassword';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
+import Search from './pages/Search';
 
 import './default.scss';
 
@@ -37,6 +38,16 @@ const App = props => {
                 <HomeLayout>
                   <Homepage />
                 </HomeLayout>
+              )} />
+              <Route exact path="search" element={(
+                <MainLayout>
+                  <Search/>
+                </MainLayout>
+              )} />
+              <Route path="search/:filterType" element={(
+                <MainLayout>
+                  <Search/>
+                </MainLayout>
               )} />
               <Route exact path="/registration"
                 element={(

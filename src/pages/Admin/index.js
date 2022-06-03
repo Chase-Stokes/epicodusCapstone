@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProductStart, fetchProductsStart } from '../../redux/Products/products.actions';
+import { addProductStart, fetchProductsStart, deleteProductStart } from '../../redux/Products/products.actions';
 import Modal from './../../components/Modal';
 import Input from './../../components/Forms/Input';
 import Select from './../../components/Forms/Select';
@@ -23,7 +23,7 @@ const Admin = props => {
 
     useEffect(() => {
         dispatch(fetchProductsStart());
-    });
+    }, []);
 
     const configModal = {
         hideModal,
@@ -31,7 +31,7 @@ const Admin = props => {
     };
     
     const resetForm = () => {
-        setProductCategory('');
+        setProductCategory('food');
         setProductName('');
         setProductThumbnail('');
         setProductPrice(0);
@@ -54,7 +54,7 @@ const Admin = props => {
                         </Button>
                     </li>
                 </ul>
-            </div>
+            </div> 
 
 
             <Modal {...configModal}>
@@ -109,7 +109,7 @@ const Admin = props => {
                 </div>
             </Modal>
             <div className="manageProducts">
-                <table>
+                <table border="0" cellPadding="0" cellSpacing="0">
                     <tbody>
                         <tr>
                             <th>
@@ -118,21 +118,25 @@ const Admin = props => {
                         </tr>
                         <tr>
                             <td>
-                                <table cellPadding="15">
+                                <table className="results" border="0" cellPadding="10" cellSpacing="0">
                                     <tbody>
                                         {products.map((product, index) => {
                                             const {
                                                 productName,
                                                 productThumbnail,
-                                                productPrice
+                                                productPrice,
+                                                documentID
                                             } = product;
                                             return (
-                                                <tr key={index}>
+                                                <tr key={index} className="productRow">
                                                     <td>
-                                                        <img src={productThumbnail} />
+                                                        <img className="thumb" src={productThumbnail} />
                                                     </td>
                                                     <td>{productName}</td>
                                                     <td>${productPrice}</td>
+                                                    <td>
+                                                        <Button onClick={() => dispatch(deleteProductStart(documentID))}>Delete</Button>
+                                                    </td>
                                                 </tr>
                                             )
                                         })}
