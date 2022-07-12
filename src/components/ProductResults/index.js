@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { fetchProductsStart } from "../../redux/Products/products.actions";
 import Select from "../Forms/Select";
 import Product from "./Product";
+import LoadMore from "../LoadMore";
 import './styles.scss';
 
 const mapState = ({ productData }) => ({
@@ -15,6 +16,8 @@ const ProductResults = ({ }) => {
     const { products } = useSelector(mapState);
     const { filterType } = useParams();
 
+    const { data, queryDoc, isLastPage } = products;
+
     useEffect(() => {
         dispatch(fetchProductsStart({ filterType }))
     }, [filterType]);
@@ -24,14 +27,22 @@ const ProductResults = ({ }) => {
         navigate(`/search/${newFilter}`);
     };
 
-    if (!Array.isArray(products)) return null;
+    if (!Array.isArray(data)) return null;
 
-    if (products.length < 1){
+    if (data.length < 1){
         return (
             <div className="products">
                 <p>No Results Found</p>
             </div>
         );
+    }
+
+    const handleLoadMore = () => {
+        dispatch(fetchProductsStart({ 
+            filterType, 
+            startAfterDoc: queryDoc, 
+            persistProducts: data 
+        }))
     }
 
     const configFilter = {
@@ -49,19 +60,23 @@ const ProductResults = ({ }) => {
         handleChange: handleFilter
     }
 
+    const configLoadMore = {
+        onLoadMoreEvent: handleLoadMore,
+    };
+
     return (
         <div className="products">
 
             <h1>Browse Products</h1>
             <Select {...configFilter} />
             <div className="productResults">
-                {products.map((product, position)=>{
+                {data.map((product, position)=>{
                     const { productThumbnail, productName, productPrice} = product;
+                    
                     if (!productThumbnail || !productName || typeof productPrice === 'undefined') return null;
+                    
                     const configProduct = {
-                        productThumbnail,
-                        productName,
-                        productPrice
+                        ...product
                     }
 
                     return (
@@ -69,6 +84,9 @@ const ProductResults = ({ }) => {
                     )
                 })}
             </div>
+            {!isLastPage && (
+                <LoadMore {...configLoadMore}/>
+            )}
         </div>
     )
 }
